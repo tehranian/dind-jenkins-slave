@@ -85,9 +85,9 @@ rm -rf /var/run/docker.pid
 
 # If we were given a PORT environment variable, start as a simple daemon;
 # otherwise, spawn a shell as well
-if [ "$PORT" ]
+if [ "$DOCKER_PORT" ]
 then
-	exec docker -d -H 0.0.0.0:$PORT -H unix://var/run/docker.sock \
+	exec docker -d -H 0.0.0.0:$DOCKER_PORT -H unix://var/run/docker.sock \
 		$DOCKER_DAEMON_ARGS
 else
 	if [ "$LOG" == "file" ]
