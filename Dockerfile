@@ -10,7 +10,6 @@ FROM evarga/jenkins-slave
 
 ENV DEBIAN_FRONTEND noninteractive
 
-
 # Adapted from: https://registry.hub.docker.com/u/jpetazzo/dind/dockerfile/
 # Let's start with some basic stuff.
 RUN apt-get update -qq && apt-get install -qqy \
@@ -18,10 +17,16 @@ RUN apt-get update -qq && apt-get install -qqy \
     ca-certificates \
     curl \
     lxc \
-    iptables
-    
+    iptables && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN echo deb https://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list && \
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+
+ENV DOCKER_VERSION 1.7.0
+
 # Install Docker from Docker Inc. repositories.
-RUN curl -sSL https://get.docker.com/ubuntu/ | sh
+RUN apt-get update && apt-get install -y lxc-docker=$DOCKER_VERSION && rm -rf /var/lib/apt/lists/*
 
 ADD wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
