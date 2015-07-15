@@ -1,7 +1,7 @@
 # Docker-in-Docker Jenkins Slave
 #
 # See: https://github.com/tehranian/dind-jenkins-slave
-# See: TODO(dan) - link to blog post
+# See: https://dantehranian.wordpress.com/2014/10/25/building-docker-images-within-docker-containers-via-jenkins/
 #
 # Following the best practices outlined in:
 #   http://jonathan.bergknoff.com/journal/building-good-docker-images
