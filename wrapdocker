@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Ensure that all nodes in /dev/mapper correspond to mapped devices currently loaded by the device-mapper kernel driver
-dmsetup mknodes
-
 # First, make sure that cgroups are mounted correctly.
 CGROUP=/sys/fs/cgroup
 : {LOG:=stdio}
@@ -90,7 +87,7 @@ rm -rf /var/run/docker.pid
 # otherwise, spawn a shell as well
 if [ "$DOCKER_PORT" ]
 then
-	exec docker -d -H 0.0.0.0:$DOCKER_PORT -H unix:///var/run/docker.sock \
+	exec docker -d -H 0.0.0.0:$DOCKER_PORT -H unix://var/run/docker.sock \
 		$DOCKER_DAEMON_ARGS
 else
 	if [ "$LOG" == "file" ]
