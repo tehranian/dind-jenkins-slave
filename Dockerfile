@@ -20,13 +20,13 @@ RUN apt-get update -qq && apt-get install -qqy \
     iptables && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo deb https://get.docker.com/ubuntu docker main > /etc/apt/sources.list.d/docker.list && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+RUN echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list && \
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-ENV DOCKER_VERSION 1.7.1
+ENV DOCKER_VERSION 1.8.1-0~trusty
 
 # Install Docker from Docker Inc. repositories.
-RUN apt-get update && apt-get install -y lxc-docker=$DOCKER_VERSION && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y docker-engine=$DOCKER_VERSION && rm -rf /var/lib/apt/lists/*
 
 ADD wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
