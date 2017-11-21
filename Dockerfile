@@ -16,17 +16,16 @@ RUN apt-get update -qq && apt-get install -qqy \
     apt-transport-https \
     ca-certificates \
     curl \
-    lxc \
-    iptables && \
+    software-properties-common && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo deb https://apt.dockerproject.org/repo ubuntu-trusty main > /etc/apt/sources.list.d/docker.list && \
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-
-ENV DOCKER_VERSION 1.9.1-0~trusty
-
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+RUN add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable"
 # Install Docker from Docker Inc. repositories.
-RUN apt-get update && apt-get install -y docker-engine=$DOCKER_VERSION && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -qqy docker-ce=17.09.0~ce-0~ubuntu && rm -rf /var/lib/apt/lists/*
 
 ADD wrapdocker /usr/local/bin/wrapdocker
 RUN chmod +x /usr/local/bin/wrapdocker
